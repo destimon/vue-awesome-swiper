@@ -44,7 +44,7 @@ const DEFAULT_EVENTS = [
 // swiperDirective
 const swiperDirective = (globalOptions, mySwiper) => {
 
-  Swiper = mySwiper;
+  Swiper = mySwiper || window.Swiper;
   // Get swiper instace name in directive
   const getInstanceName = (el, binding, vnode) => {
     let instanceName = null
