@@ -17,7 +17,7 @@ var DEFAULT_EVENTS = ['beforeDestroy', 'slideChange', 'slideChangeTransitionStar
 
 var swiperDirective = function swiperDirective(globalOptions, mySwiper) {
 
-  var Swiper = mySwiper;
+  exports.Swiper = Swiper = mySwiper;
 
   var getInstanceName = function getInstanceName(el, binding, vnode) {
     var instanceName = null;
