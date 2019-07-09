@@ -87,9 +87,9 @@ var swiper = swiperDirective({});
 
 var install = function install(Vue) {
   var globalOptions = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
-  var Swiper = arguments[2];
+  var mySwiper = arguments[2];
 
-  Vue.directive('swiper', swiperDirective(globalOptions, Swiper));
+  Vue.directive('swiper', swiperDirective(globalOptions, mySwiper));
 };
 
 var VueAwesomeSwiper = { Swiper: Swiper, swiper: swiper, install: install };
