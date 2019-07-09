@@ -5,21 +5,20 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.install = exports.swiper = exports.Swiper = undefined;
 
-var _swiper = require('swiper/dist/js/swiper.js');
-
-var _swiper2 = _interopRequireDefault(_swiper);
-
 var _objectAssign = require('object-assign');
 
 var _objectAssign2 = _interopRequireDefault(_objectAssign);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var Swiper = window.Swiper || _swiper2.default;
+var Swiper = window.Swiper;
 
 var DEFAULT_EVENTS = ['beforeDestroy', 'slideChange', 'slideChangeTransitionStart', 'slideChangeTransitionEnd', 'slideNextTransitionStart', 'slideNextTransitionEnd', 'slidePrevTransitionStart', 'slidePrevTransitionEnd', 'transitionStart', 'transitionEnd', 'touchStart', 'touchMove', 'touchMoveOpposite', 'sliderMove', 'touchEnd', 'click', 'tap', 'doubleTap', 'imagesReady', 'progress', 'reachBeginning', 'reachEnd', 'fromEdge', 'setTranslate', 'setTransition', 'resize'];
 
-var swiperDirective = function swiperDirective(globalOptions) {
+var swiperDirective = function swiperDirective(globalOptions, mySwiper) {
+
+  var Swiper = mySwiper;
+
   var getInstanceName = function getInstanceName(el, binding, vnode) {
     var instanceName = null;
     if (binding.arg) {
@@ -52,7 +51,6 @@ var swiperDirective = function swiperDirective(globalOptions) {
 
       if (!swiper) {
         var swiperOptions = (0, _objectAssign2.default)({}, globalOptions, options);
-        exports.Swiper = Swiper = options.Swiper;
         swiper = self[instanceName] = new Swiper(el, swiperOptions);
         DEFAULT_EVENTS.forEach(function (eventName) {
           swiper.on(eventName, function () {
@@ -91,7 +89,7 @@ var install = function install(Vue) {
   var globalOptions = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
   var Swiper = arguments[2];
 
-  Vue.directive('swiper', swiperDirective(globalOptions), Swiper);
+  Vue.directive('swiper', swiperDirective(globalOptions, Swiper));
 };
 
 var VueAwesomeSwiper = { Swiper: Swiper, swiper: swiper, install: install };

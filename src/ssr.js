@@ -6,10 +6,9 @@
 */
 
 // Require sources
-import _Swiper from 'swiper/dist/js/swiper.js'
 import objectAssign from 'object-assign'
 
-let Swiper = window.Swiper || _Swiper
+const Swiper = window.Swiper;
 
 // as of swiper 4.0.7
 // http://idangero.us/swiper/api/#events
@@ -43,8 +42,9 @@ const DEFAULT_EVENTS = [
 ]
 
 // swiperDirective
-const swiperDirective = globalOptions => {
+const swiperDirective = (globalOptions, mySwiper) => {
 
+  const Swiper = mySwiper;
   // Get swiper instace name in directive
   const getInstanceName = (el, binding, vnode) => {
     let instanceName = null
@@ -84,7 +84,6 @@ const swiperDirective = globalOptions => {
 
       if (!swiper) {
         const swiperOptions = objectAssign({}, globalOptions, options)
-        Swiper = options.Swiper;
         swiper = self[instanceName] = new Swiper(el, swiperOptions)
         DEFAULT_EVENTS.forEach(eventName => {
           swiper.on(eventName, function() {
@@ -128,7 +127,7 @@ const swiper = swiperDirective({})
 const install = function (Vue, globalOptions = {}, Swiper) {
 
   // Mount swiper directive for Vue global
-  Vue.directive('swiper', swiperDirective(globalOptions), Swiper)
+  Vue.directive('swiper', swiperDirective(globalOptions, Swiper))
 }
 
 const VueAwesomeSwiper = { Swiper, swiper, install }
