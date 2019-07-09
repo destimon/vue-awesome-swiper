@@ -127,7 +127,7 @@ const swiper = swiperDirective({})
 const install = function (Vue, globalOptions = {}, Swiper) {
 
   // Mount swiper directive for Vue global
-  Vue.directive('swiper', swiperDirective(globalOptions))
+  Vue.directive('swiper', swiperDirective(globalOptions), Swiper)
 }
 
 const VueAwesomeSwiper = { Swiper, swiper, install }
