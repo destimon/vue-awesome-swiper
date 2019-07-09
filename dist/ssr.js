@@ -52,6 +52,7 @@ var swiperDirective = function swiperDirective(globalOptions) {
 
       if (!swiper) {
         var swiperOptions = (0, _objectAssign2.default)({}, globalOptions, options);
+        exports.Swiper = Swiper = options.Swiper;
         swiper = self[instanceName] = new Swiper(el, swiperOptions);
         DEFAULT_EVENTS.forEach(function (eventName) {
           swiper.on(eventName, function () {
