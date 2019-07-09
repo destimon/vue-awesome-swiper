@@ -8,7 +8,7 @@
 // Require sources
 import objectAssign from 'object-assign'
 
-const Swiper = window.Swiper;
+let Swiper = window.Swiper;
 
 // as of swiper 4.0.7
 // http://idangero.us/swiper/api/#events
@@ -44,7 +44,7 @@ const DEFAULT_EVENTS = [
 // swiperDirective
 const swiperDirective = (globalOptions, mySwiper) => {
 
-  const Swiper = mySwiper;
+  Swiper = mySwiper;
   // Get swiper instace name in directive
   const getInstanceName = (el, binding, vnode) => {
     let instanceName = null
