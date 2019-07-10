@@ -49,18 +49,29 @@ var swiperDirective = function swiperDirective(globalOptions, mySwiper) {
         if (handlers && handlers[name]) handlers[name].fns(data);
       };
 
-      if (!swiper) {
-        var swiperOptions = (0, _objectAssign2.default)({}, globalOptions, options);
-        swiper = self[instanceName] = new Swiper(el, swiperOptions);
-        DEFAULT_EVENTS.forEach(function (eventName) {
-          swiper.on(eventName, function () {
-            eventEmit.apply(undefined, [vnode, eventName].concat(Array.prototype.slice.call(arguments)));
-            eventEmit.apply(undefined, [vnode, eventName.replace(/([A-Z])/g, '-$1')].concat(Array.prototype.slice.call(arguments)));
-          });
-        });
+      if (typeof Swiper.then === 'function') {
+        Swiper.then(ready);
+      } else {
+        ready(Swiper);
       }
 
-      eventEmit(vnode, 'ready', swiper);
+      function ready(_Swiper) {
+        if (self._isDestroyed) {
+          return;
+        }
+        if (!swiper) {
+          var swiperOptions = (0, _objectAssign2.default)({}, globalOptions, options);
+          swiper = self[instanceName] = new _Swiper(el, swiperOptions);
+          DEFAULT_EVENTS.forEach(function (eventName) {
+            swiper.on(eventName, function () {
+              eventEmit.apply(undefined, [vnode, eventName].concat(Array.prototype.slice.call(arguments)));
+              eventEmit.apply(undefined, [vnode, eventName.replace(/([A-Z])/g, '-$1')].concat(Array.prototype.slice.call(arguments)));
+            });
+          });
+        }
+
+        eventEmit(vnode, 'ready', swiper);
+      }
     },
     componentUpdated: function componentUpdated(el, binding, vnode) {
       var instanceName = getInstanceName(el, binding, vnode);

@@ -82,18 +82,30 @@ const swiperDirective = (globalOptions, mySwiper) => {
         if (handlers && handlers[name]) handlers[name].fns(data)
       }
 
-      if (!swiper) {
-        const swiperOptions = objectAssign({}, globalOptions, options)
-        swiper = self[instanceName] = new Swiper(el, swiperOptions)
-        DEFAULT_EVENTS.forEach(eventName => {
-          swiper.on(eventName, function() {
-            eventEmit(vnode, eventName, ...arguments)
-            eventEmit(vnode, eventName.replace(/([A-Z])/g, '-$1'), ...arguments)
-          })
-        })
+      if (typeof Swiper.then === 'function') { // if promise
+        Swiper.then(ready);
+      }
+      else {
+        ready(Swiper);
       }
 
-      eventEmit(vnode, 'ready', swiper)
+      function ready(_Swiper) {
+        if (self._isDestroyed) { // vue component already destroyed
+          return;
+        }
+        if (!swiper) {
+          const swiperOptions = objectAssign({}, globalOptions, options)
+          swiper = self[instanceName] = new _Swiper(el, swiperOptions)
+          DEFAULT_EVENTS.forEach(eventName => {
+            swiper.on(eventName, function() {
+              eventEmit(vnode, eventName, ...arguments)
+              eventEmit(vnode, eventName.replace(/([A-Z])/g, '-$1'), ...arguments)
+            })
+          })
+        }
+  
+        eventEmit(vnode, 'ready', swiper)
+      }
     },
 
     // Parse options change
