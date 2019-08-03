@@ -8,6 +8,7 @@
     <slot name="button-prev"></slot>
     <slot name="button-next"></slot>
     <slot name="scrollbar"></slot>
+    <slot name="other"></slot>
   </div>
 </template>
 
