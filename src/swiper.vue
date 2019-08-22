@@ -1,5 +1,5 @@
 <template>
-  <div class="swiper-container">
+  <div class="swiper-container" :class="classes.containerClasses">
     <slot name="parallax-bg"></slot>
     <div :class="classes.wrapperClass">
       <slot></slot>
@@ -91,7 +91,8 @@
       return {
         swiper: null,
         classes: {
-          wrapperClass: 'swiper-wrapper'
+          wrapperClass: 'swiper-wrapper',
+          containerClasses: null,
         }
       }
     },
@@ -135,6 +136,7 @@
           this.swiper.navigation && this.swiper.navigation.update()
           this.swiper.pagination && this.swiper.pagination.render()
           this.swiper.pagination && this.swiper.pagination.update()
+          this.classes.containerClasses = this.swiper.classNames
         }
       },
       mountInstance() {
